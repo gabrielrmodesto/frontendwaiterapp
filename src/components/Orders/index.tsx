@@ -4,9 +4,18 @@ import { Container } from './styles';
 export function Orders() {
   return(
     <Container>
-      <OrdersBoard />
-      <OrdersBoard />
-      <OrdersBoard />
+      <OrdersBoard
+        icon="⏰"
+        title="Fila de Espera"
+      />
+      <OrdersBoard
+        icon="👨🏻‍🍳"
+        title="Em preparação"
+      />
+      <OrdersBoard
+        icon="✅"
+        title="Pronto!"
+      />
     </Container>
   );
 }
