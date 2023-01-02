@@ -8,9 +8,16 @@ interface OrderModalProps {
   onClose: () => void;
   onCancelOrder: () => Promise<void>;
   isLoading: boolean;
+  onChangeStatusOrder: () => Promise<void>;
 }
 
-export function OrderModal({ visible, order, onClose, onCancelOrder, isLoading }: OrderModalProps) {
+export function OrderModal({
+  visible,
+  order,
+  onClose,
+  onCancelOrder,
+  isLoading,
+  onChangeStatusOrder}: OrderModalProps) {
   if (!visible || !order) {
     return null;
   }
@@ -34,7 +41,7 @@ export function OrderModal({ visible, order, onClose, onCancelOrder, isLoading }
             <div>
               <span>
                 {order.status === 'WAITING' && '⏰'}
-                {order.status === 'IN PRODUCTION' && '👨🏻‍🍳'}
+                {order.status === 'IN_PRODUCTION' && '👨🏻‍🍳'}
                 {order.status === 'DONE' && '✅'}
               </span>
               <strong>{order.status === 'WAITING' && 'File de Espera'}
@@ -68,14 +75,23 @@ export function OrderModal({ visible, order, onClose, onCancelOrder, isLoading }
           </OrderDetails>
 
           <Actions>
-            <button
-              type='button'
-              className='primary'
-              disabled={isLoading}
-            >
-              <span>👨🏻‍🍳</span>
-              <strong>Iniciar Produção</strong>
-            </button>
+            {order.status !== 'DONE' && (
+              <button
+                type='button'
+                className='primary'
+                disabled={isLoading}
+                onClick={onChangeStatusOrder}
+              >
+                <span>
+                  {order.status === 'WAITING' && '👨🏻‍🍳'}
+                  {order.status === 'IN_PRODUCTION' && '✅'}
+                </span>
+                <strong>
+                  {order.status === 'WAITING' && 'Iniciar Produção'}
+                  {order.status === 'IN_PRODUCTION' && 'Concluir Pedido'}
+                </strong>
+              </button>
+            )}
             <button
               type='button'
               className='secondary'
