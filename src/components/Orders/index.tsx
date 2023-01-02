@@ -18,6 +18,9 @@ export function Orders() {
   const inProduction = orders.filter((order) => order.status === 'IN_PRODUCTION');
   const done = orders.filter((order) => order.status === 'DONE');
 
+  function handleCancelOrder(orderId: string){
+    setOrders((prevState) => prevState.filter(order => order._id !== orderId));
+  }
 
   return(
     <Container>
@@ -25,16 +28,19 @@ export function Orders() {
         icon="⏰"
         title="Fila de Espera"
         orders={waiting}
+        onCancelOrder={handleCancelOrder}
       />
       <OrdersBoard
         icon="👨🏻‍🍳"
         title="Em preparação"
         orders={inProduction}
+        onCancelOrder={handleCancelOrder}
       />
       <OrdersBoard
         icon="✅"
         title="Pronto!"
         orders={done}
+        onCancelOrder={handleCancelOrder}
       />
     </Container>
   );

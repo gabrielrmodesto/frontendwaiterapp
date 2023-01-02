@@ -8,6 +8,7 @@ interface OrdersBoard{
   icon: string;
   title: string;
   orders: Order[];
+  onCancelOrder: (orderId: string) => void;
 }
 
 export function OrdersBoard(props: OrdersBoard) {
@@ -31,6 +32,7 @@ export function OrdersBoard(props: OrdersBoard) {
     await new Promise(resolve => setTimeout(resolve, 3000));
     await api.delete(`/orders/${selectedOrder?._id}`);
 
+    props.onCancelOrder(selectedOrder!._id);
     setIsLoading(false);
     setIsModalVisible(false);
   }
